@@ -75,12 +75,14 @@ export default {
                 })
             }
             if(this.userType === 2) {
-                if(this.login.userData[0] === '171110152' && this.login.userData[1] === '123456') {
-                    localStorage.setItem('id', '171110152');
+                if(this.login.userData[0] === '123456' && this.login.userData[1] === '123456') {
+                    localStorage.setItem('id', '123456');
                     localStorage.setItem('type', 'manager');
                     let res = await this.$axios.post('/api'+ otherApi.managerLogin)
                     this.$toast({text: res.data.msg, type: 'success'})
                     this.$router.push({path:'/main'});
+                } else {
+                    this.$toast({text: "管理号或密码错误", type: 'danger'})
                 }
             }
         }

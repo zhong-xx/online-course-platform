@@ -12,13 +12,28 @@
         stripe
         >
         <el-table-column
-          prop="major"
-          label="专业"
+          prop="name"
+          label="名字"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="courseList"
-          label="课程"
+          prop="teacherID"
+          label="教师号"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="password"
+          label="密码"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="phoneNumber"
+          label="电话号码"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="mailBox"
+          label="邮箱"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
@@ -27,7 +42,7 @@
           width="200">
           <template slot-scope="scope">
             <el-button @click="modify(scope.row)" type="text" size="small">修改</el-button>
-            <el-button @click="deletePlan(scope.row)" type="text" size="small">删除</el-button>
+            <el-button @click="deleteTeacher(scope.row)" type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -35,12 +50,11 @@
 </template>
 
 <script>
-import { planApi } from '@/api'
+import { teacherApi } from '@/api'
 export default {
-    name: 'CoursePlan',
+    name: 'Teacher',
     created () {
-      this.getPlanMessage();
-      console.log('3')
+      this.getTeachersMessage();
     },
     data () {
       return {
@@ -49,36 +63,33 @@ export default {
     },
     methods: {
       add () {
-        this.$router.push('/main/addCoursePlan')
+        this.$router.push('/main/addTeacher')
       },
       modify(row) {
-        this.$router.push(`/main/modifyCoursePlan/${row.major}/${row.courseList}`)
+        this.$router.push(`/main/modifyTeacher/${row._id}`)
       },
-      async deletePlan (row) {
-        let res = await this.$axios.post('/api'+ planApi.deletePlan, {
-          major: row.major
-        });
-        let { code, msg } = res.data;
-        if(code === '0000') {
-          this.$toast({text: msg, type: 'success'})
-          this.getPlanMessage();
-        }
+      async deleteTeacher (row) {
+        let res = await this.$axios.post('/api'+ teacherApi.deleteTeacher, {
+              teacherId: row._id
+            });
+            let {code, msg} = res.data;
+            if(code === '0000') {
+              this.$toast({text: msg, type: 'success'});
+              this.getTeachersMessage();
+            }
       },
-      async getPlanMessage () {
-        console.log('1')
-        let res = await this.$axios.get('/api'+ planApi.getPlanMessage);
-        console.log('4')
+      async getTeachersMessage () {
+        let res = await this.$axios.get('/api'+ teacherApi.getTeachersMessage)
         let { code, msg, data } = res.data;
         if(code === '0000') {
           this.tableData = data
-        } 
-        console.log('2')
+        }  
       }
     },
     watch: {
       '$route' (to, from) {
-        if(from.path.indexOf('addCoursePlan') !== 0) {
-          this.getPlanMessage();
+        if(from.path.indexOf('addTeacher') !== 0 || from.path.indexOf('modifyTeacher') !== 0 ) {
+          this.getTeachersMessage();
         }
       }
     }

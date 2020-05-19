@@ -12,7 +12,7 @@ export default {
     name: 'Aside',
     data () {
         return {
-            functionList: ['学生信息','用户信息','课程信息','选课方案'],
+            functionList: ['学生信息','教师信息','课程信息','选课方案'],
             whichFunction: 0,
             userType: ''
         }
@@ -24,20 +24,20 @@ export default {
                 case '学生信息':
                     this.$router.push('/main/student');
                     break;
-                case '用户信息':
-                    this.$router.push('/main/message/user');
+                case '教师信息':
+                    this.$router.push('/main/teacher');
                     break;
                 case '课程信息':
-                    this.$router.push('/main/message/course');
+                    this.$router.push('/main/course');
                     break;
                 case '选课方案':
                     this.$router.push('/main/coursePlan');
                     break;
                 case '我的课程':
-                    this.$router.push('/studentMain/message/myCourse');
+                    this.$router.push('/studentMain/myCourse');
                     break;
                 case '可选课程':
-                    this.$router.push('/studentMain/message/selectCourse');
+                    this.$router.push('/studentMain/selectCourse');
                     break;
                 case '我的成绩':
                     this.$router.push('/studentMain/myGrade')
@@ -56,17 +56,20 @@ export default {
                     this.functionList = ['学生成绩'];
                     break;
                 case 'manager':
-                    this.functionList = ['学生信息','用户信息','课程信息','选课方案'];
+                    this.functionList = ['学生信息','教师信息','课程信息','选课方案'];
                     break;
             }
             switch (true) {
-                case ['/main/message/user', '/studentMain/message/myCourse'].includes(this.$route.path): 
+                case '/studentMain/myCourse' === this.$route.path || this.$route.path.indexOf("tudent") > 4: 
                     this.whichFunction = 0;
                     break;
-                case ['/main/message/course', '/studentMain/message/selectCourse'].includes(this.$route.path): 
+                case ['/studentMain/selectCourse'].includes(this.$route.path) || this.$route.path.indexOf("eacher") > 4: 
                     this.whichFunction = 1;
                     break;
-                case ['/main/register', '/studentMain/myGrade', '/main/coursePlan'].includes(this.$route.path): 
+                case this.$route.path.indexOf("oursePlan") > 4:
+                    this.whichFunction = 3;
+                    break;
+                case ['/studentMain/myGrade', '/main/coursePlan'].includes(this.$route.path) || this.$route.path.indexOf("ourse") > 4: 
                     this.whichFunction = 2;
                     break;
             }

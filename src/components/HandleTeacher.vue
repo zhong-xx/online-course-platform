@@ -11,30 +11,19 @@
                   <el-form-item label="名字 :">
                       <el-input v-model="ruleForm.name" placeholder="请输入名字"></el-input>
                   </el-form-item>
-                  <el-form-item label="学号 :">
-                      <el-input v-model="ruleForm.studentID" placeholder="请输入学号"></el-input>
+                  <el-form-item label="教师号 :">
+                      <el-input v-model="ruleForm.teacherID" placeholder="请输入教师号"></el-input>
                   </el-form-item>
               </div>
               <div class="row-container">
                   <el-form-item label="密码 :">
                       <el-input v-model="ruleForm.password" placeholder="请输入密码"></el-input>
                   </el-form-item>
-                  <el-form-item label="学院 :">
-                      <el-input v-model="ruleForm.college" placeholder="请输入学院"></el-input>
-                  </el-form-item>
-              </div>
-              <div class="row-container">
-                  <el-form-item label="班级 :">
-                      <el-input v-model="ruleForm.class" placeholder="请输入班级"></el-input>
-                  </el-form-item>
-                  <el-form-item label="专业 :">
-                      <el-input v-model="ruleForm.major" placeholder="请输入专业"></el-input>
-                  </el-form-item>
-              </div>
-              <div class="row-container">
                   <el-form-item label="电话号码 :">
                       <el-input v-model="ruleForm.phoneNumber" placeholder="请输入电话号码"></el-input>
                   </el-form-item>
+              </div>
+              <div class="row-container">
                   <el-form-item label="邮箱 :">
                       <el-input v-model="ruleForm.mailBox" placeholder="请输入邮箱"></el-input>
                   </el-form-item>
@@ -52,24 +41,21 @@
 </template>
 
 <script>
-import { studentApi } from '@/api'
+import { teacherApi } from '@/api'
 export default {
-    name: 'HandleStudent',
+    name: 'HandleTeacher',
     props: ['id'],
     created () {
-        if(this.$route.path.indexOf('modifyStudent') !== -1) {
-            this.getStudentMessage();
+        if(this.$route.path.indexOf('modifyTeacher') !== -1) {
+            this.getTeacherMessage();
         }
     },
     data () {
         return {
             ruleForm: {
                 name: '',
-                studentID: '',
+                teacherID: '',
                 password:'',
-                college:'',
-                class: '',
-                major: '',
                 phoneNumber: '',
                 mailBox: '',
             }
@@ -77,15 +63,12 @@ export default {
     },
     methods: {
         async submitForm() {
-            if(this.$route.path.indexOf('modifyStudent') !== -1) {
-                let res = await this.$axios.post('/api'+ studentApi.updateStudentMessage, {
+            if(this.$route.path.indexOf('modifyTeacher') !== -1) {
+                let res = await this.$axios.post('/api'+ teacherApi.updateTeacherMessage, {
                     id: this.id,
                     name: this.ruleForm.name,
-                    studentId: this.ruleForm.studentID,
+                    teacherId: this.ruleForm.teacherID,
                     password: this.ruleForm.password,
-                    college: this.ruleForm.college,
-                    class: this.ruleForm.class,
-                    major: this.ruleForm.major,
                     phoneNumber: this.ruleForm.phoneNumber,
                     mailBox: this.ruleForm.mailBox
                 })
@@ -96,13 +79,10 @@ export default {
                 }
                 return;
             }
-            let res = await this.$axios.post('/api'+ studentApi.studentRegister, {
+            let res = await this.$axios.post('/api'+ teacherApi.teacherRegister, {
                 name: this.ruleForm.name,
-                studentId: this.ruleForm.studentID,
+                teacherId: this.ruleForm.teacherID,
                 password: this.ruleForm.password,
-                college: this.ruleForm.college,
-                class: this.ruleForm.class,
-                major: this.ruleForm.major,
                 phoneNumber: this.ruleForm.phoneNumber,
                 mailBox: this.ruleForm.mailBox
             })
@@ -117,8 +97,8 @@ export default {
         close () {
             this.$router.back();
         },
-        async getStudentMessage () {
-            let res = await this.$axios.get('/api'+studentApi.getStudentMessage,{
+        async getTeacherMessage () {
+            let res = await this.$axios.get('/api'+ teacherApi.getTeacherMessage,{
                 params: {
                     id: this.id
                 }

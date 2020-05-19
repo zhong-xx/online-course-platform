@@ -1,19 +1,18 @@
 export default {
     path: '/studentMain',
     component: () => import('@/views/Main.vue'),
-    beforEnter: (to, from, next) => {
-        if(localStorage.getItem('type') === 'student') {
-            console.log('ldfj')
-            next();
-        }else {
-            next('/')
-        }
-    },
     children: [
         {
-            path: 'message/:type',
-            component: () => import('@/components/Message.vue'),
-            props: true
+            path: 'myCourse',
+            components:{
+                myCourse: () => import('@/components/Course.vue')
+            } 
+        },
+        {
+            path: 'selectCourse',
+            components:{
+                selectCourse: () => import('@/components/Course.vue')
+            } 
         },
         {
             path: 'myGrade',
@@ -21,7 +20,7 @@ export default {
         },
         {
             path: '/',
-            redirect: '/studentMain/message/myCourse',
+            redirect: '/studentMain/myCourse',
         }
     ]
 }

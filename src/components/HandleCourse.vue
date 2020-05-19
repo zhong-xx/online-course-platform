@@ -8,35 +8,40 @@
 
           <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
               <div class="row-container">
-                  <el-form-item label="名字 :">
-                      <el-input v-model="ruleForm.name" placeholder="请输入名字"></el-input>
+                  <el-form-item label="课程名 :">
+                      <el-input v-model="ruleForm.name" placeholder="请输入课程名"></el-input>
                   </el-form-item>
-                  <el-form-item label="学号 :">
-                      <el-input v-model="ruleForm.studentID" placeholder="请输入学号"></el-input>
-                  </el-form-item>
-              </div>
-              <div class="row-container">
-                  <el-form-item label="密码 :">
-                      <el-input v-model="ruleForm.password" placeholder="请输入密码"></el-input>
-                  </el-form-item>
-                  <el-form-item label="学院 :">
-                      <el-input v-model="ruleForm.college" placeholder="请输入学院"></el-input>
+                  <el-form-item label="课程类型 :">
+                      <el-input v-model="ruleForm.type" placeholder="请输入课程类型"></el-input>
                   </el-form-item>
               </div>
               <div class="row-container">
-                  <el-form-item label="班级 :">
-                      <el-input v-model="ruleForm.class" placeholder="请输入班级"></el-input>
+                  <el-form-item label="课程地点 :">
+                      <el-input v-model="ruleForm.place" placeholder="请输入课程地点"></el-input>
                   </el-form-item>
-                  <el-form-item label="专业 :">
-                      <el-input v-model="ruleForm.major" placeholder="请输入专业"></el-input>
+                  <el-form-item label="学分 :">
+                      <el-input v-model="ruleForm.credit" placeholder="请输入学分"></el-input>
                   </el-form-item>
               </div>
               <div class="row-container">
-                  <el-form-item label="电话号码 :">
-                      <el-input v-model="ruleForm.phoneNumber" placeholder="请输入电话号码"></el-input>
+                  <el-form-item label="开始周 :">
+                      <el-input v-model="ruleForm.begin_week" placeholder="请输入开始周"></el-input>
                   </el-form-item>
-                  <el-form-item label="邮箱 :">
-                      <el-input v-model="ruleForm.mailBox" placeholder="请输入邮箱"></el-input>
+                  <el-form-item label="结束周 :">
+                      <el-input v-model="ruleForm.end_week" placeholder="请输入结束周"></el-input>
+                  </el-form-item>
+              </div>
+              <div class="row-container">
+                  <el-form-item label="书籍 :">
+                      <el-input v-model="ruleForm.book" placeholder="请输入书籍"></el-input>
+                  </el-form-item>
+                  <el-form-item label="教师 :">
+                      <el-input v-model="ruleForm.teacher" placeholder="请输入教师"></el-input>
+                  </el-form-item>
+              </div>
+              <div class="row-container">
+                  <el-form-item label="总数量 :">
+                      <el-input v-model="ruleForm.quantity" placeholder="请输入总数量"></el-input>
                   </el-form-item>
               </div>
               <div class="row-container">
@@ -52,42 +57,44 @@
 </template>
 
 <script>
-import { studentApi } from '@/api'
+import { courseApi } from '@/api'
 export default {
-    name: 'HandleStudent',
+    name: 'HandleTeacher',
     props: ['id'],
     created () {
-        if(this.$route.path.indexOf('modifyStudent') !== -1) {
-            this.getStudentMessage();
+        if(this.$route.path.indexOf('modifyCourse') !== -1) {
+            this.getCourseMessage();
         }
     },
     data () {
         return {
             ruleForm: {
                 name: '',
-                studentID: '',
-                password:'',
-                college:'',
-                class: '',
-                major: '',
-                phoneNumber: '',
-                mailBox: '',
+                type: '',
+                place:'',
+                credit: '',
+                begin_week: '',
+                end_week: '',
+                book:'',
+                teacher: '',
+                quantity: ''
             }
         }
     },
     methods: {
         async submitForm() {
-            if(this.$route.path.indexOf('modifyStudent') !== -1) {
-                let res = await this.$axios.post('/api'+ studentApi.updateStudentMessage, {
+            if(this.$route.path.indexOf('modifyCourse') !== -1) {
+                let res = await this.$axios.post('/api'+ courseApi.updateCourseMessage, {
                     id: this.id,
                     name: this.ruleForm.name,
-                    studentId: this.ruleForm.studentID,
-                    password: this.ruleForm.password,
-                    college: this.ruleForm.college,
-                    class: this.ruleForm.class,
-                    major: this.ruleForm.major,
-                    phoneNumber: this.ruleForm.phoneNumber,
-                    mailBox: this.ruleForm.mailBox
+                    credit: this.ruleForm.credit,
+                    beginWeek: this.ruleForm.begin_week,
+                    endWeek: this.ruleForm.end_week,
+                    book: this.ruleForm.book,
+                    teacher: this.ruleForm.teacher,
+                    quantity: this.ruleForm.quantity,
+                    type: this.ruleForm.type,
+                    place: this.ruleForm.place
                 })
                 let { code, msg } = res.data;
                 if(code === '0000') {
@@ -96,15 +103,16 @@ export default {
                 }
                 return;
             }
-            let res = await this.$axios.post('/api'+ studentApi.studentRegister, {
+            let res = await this.$axios.post('/api'+ courseApi.addCourseMessage, {
                 name: this.ruleForm.name,
-                studentId: this.ruleForm.studentID,
-                password: this.ruleForm.password,
-                college: this.ruleForm.college,
-                class: this.ruleForm.class,
-                major: this.ruleForm.major,
-                phoneNumber: this.ruleForm.phoneNumber,
-                mailBox: this.ruleForm.mailBox
+                credit: this.ruleForm.credit,
+                beginWeek: this.ruleForm.begin_week,
+                endWeek: this.ruleForm.end_week,
+                book: this.ruleForm.book,
+                teacher: this.ruleForm.teacher,
+                quantity: this.ruleForm.quantity,
+                type: this.ruleForm.type,
+                place: this.ruleForm.place
             })
             let { code, msg } = res.data;
             if(code === '0000') {
@@ -117,8 +125,8 @@ export default {
         close () {
             this.$router.back();
         },
-        async getStudentMessage () {
-            let res = await this.$axios.get('/api'+studentApi.getStudentMessage,{
+        async getCourseMessage () {
+            let res = await this.$axios.get('/api'+ courseApi.getCourseMessage,{
                 params: {
                     id: this.id
                 }

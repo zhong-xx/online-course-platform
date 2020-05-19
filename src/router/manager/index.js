@@ -1,47 +1,75 @@
 export default {
     path: '/main',
     component: () => import('@/views/Main.vue'),
-    beforEnter: (to, from, next) => {
-        if(localStorage.getItem('type') === 'manager') {
-            next();
-        }else {
-            next('/')
-        }
-    },
     children: [     
-        {
-            path: 'message/:type',
-            component: () => import('@/components/Message.vue'),
-            props: true
-        },
-        {
-            path: 'studentFunc/:type/:id?',
-            component: () => import('@/components/user/StudentFunc.vue'),
-            props: true
-        },
-        {
-            path: 'teacherFunc/:type/:id?',
-            component: () => import('@/components/user/TeacherFunc.vue'),
-            props: true
-        },
-        {
-            path: 'courseFunc/:type/:id?',
-            component: () => import('@/components/course/CourseFunc.vue'),
-            props: true
-        },
-
         {
             path: 'student',
             component: () => import('@/components/Student.vue')
         },
         {
             path: 'addStudent',
-            component: () => import('@/components/HandleStudent.vue')
+            components: {
+                default: () => import('@/components/Student.vue'),
+                addStudent: () => import('@/components/HandleStudent.vue')
+            }
         },
         {
-            path: 'modifyStudent',
-            component: () => import('@/components/HandleStudent.vue')
+            path: 'modifyStudent/:id',
+            components: {
+                default: () => import('@/components/Student.vue'),
+                modifyStudent: () => import('@/components/HandleStudent.vue')
+            },
+            props: {
+                modifyStudent: true
+            }
         },
+
+        {
+            path: 'teacher',
+            component: () => import('@/components/Teacher.vue')
+        },
+        {
+            path: 'addTeacher',
+            components: {
+                default: () => import('@/components/Teacher.vue'),
+                addTeacher: () => import('@/components/HandleTeacher.vue')
+            }
+        },
+        {
+            path: 'modifyTeacher/:id',
+            components: {
+                default: () => import('@/components/Teacher.vue'),
+                modifyTeacher: () => import('@/components/HandleTeacher.vue')
+            },
+            props: {
+                modifyTeacher: true
+            }
+        },
+
+        {
+            path: 'course',
+            components:{
+                course: () => import('@/components/Course.vue')
+            } 
+        },
+        {
+            path: 'addCourse',
+            components: {
+                course: () => import('@/components/Course.vue'),
+                addCourse: () => import('@/components/HandleCourse.vue')
+            }
+        },
+        {
+            path: 'modifyCourse/:id',
+            components: {
+                course: () => import('@/components/Course.vue'),
+                modifyCourse: () => import('@/components/HandleCourse.vue')
+            },
+            props: {
+                modifyCourse: true
+            }
+        },
+
         {
             path: 'coursePlan',
             component: () => import('@/components/CoursePlan.vue')
@@ -65,7 +93,7 @@ export default {
         },
         {
             path: '/',
-            redirect: '/main/message/user',
+            redirect: '/main/student',
         }
     ]
 }

@@ -1,8 +1,6 @@
 <template>
   <div class="course-plan">
-      <div class="operation-container">
-        <el-button type="primary" @click="add">新增</el-button>
-      </div>
+      <slot name="func"></slot>
 
       <el-table
         ref="multipleTable"
@@ -13,63 +11,65 @@
         >
         <el-table-column
           prop="name"
-          label="名字"
+          label="课程名"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="studentID"
-          label="学号"
+          prop="type"
+          label="课程类型"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="password"
-          label="密码"
+          prop="place"
+          label="课程地点"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="college"
-          label="学院"
+          prop="credit"
+          label="学分"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="class"
-          label="班级"
+          prop="begin_week"
+          label="开始周"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="major"
-          label="专业"
+          prop="end_week"
+          label="结束周"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="phoneNumber"
-          label="电话号码"
+          prop="book"
+          label="书籍"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="mailBox"
-          label="邮箱"
+          prop="teacher"
+          label="教师"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="quantity"
+          label="总数量"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          fixed="right"
-          label="操作"
-          width="200">
-          <template slot-scope="scope">
-            <el-button @click="modify(scope.row)" type="text" size="small">修改</el-button>
-            <el-button @click="deleteStudent(scope.row)" type="text" size="small">删除</el-button>
-          </template>
+          prop="selected_quantity"
+          label="已选数量"
+          show-overflow-tooltip>
         </el-table-column>
+        <slot></slot>
       </el-table>
   </div>
 </template>
 
 <script>
-import { studentApi } from '@/api'
+import { courseApi, studentCourseApi } from '@/api'
 export default {
-    name: 'Student',
+    name: 'Teacher',
     created () {
-      this.getStudentsMessage();
+      this.getCoursesMessage();
     },
     data () {
       return {
@@ -78,23 +78,35 @@ export default {
     },
     methods: {
       add () {
-        this.$router.push('/main/addStudent')
+        this.$router.push('/main/addCourse')
       },
       modify(row) {
-        this.$router.push(`/main/modifyStudent/${row._id}`)
+        this.$router.push(`/main/modifyCourse/${row._id}`)
       },
-      async deleteStudent (row) {
-        let res = await this.$axios.post('/api'+ studentApi.deleteStudent, {
-              studentId: row._id
+      async deleteCourse (row) {
+        let res = await this.$axios.post('/api'+ courseApi.deleteCourse, {
+              courseId: row._id
             });
             let {code, msg} = res.data;
             if(code === '0000') {
               this.$toast({text: msg, type: 'success'});
-              this.getStudentsMessage();
+              this.getCoursesMessage();
             }
       },
-      async getStudentsMessage () {
-        let res = await this.$axios.get('/api'+ studentApi.getStudentsMessage)
+      async getCoursesMessage () {
+        if(this.$route.path.indexOf('myCourse') !== -1) {
+          let res = await this.$axios.get('/api'+ studentCourseApi.getStudentCourse, {
+            params: {
+              id: localStorage.getItem('id')
+            }
+          })
+          let {code, msg, data} = res.data;
+          if(code === '0000') {
+            this.tableData = data;
+          }
+          return;
+        }
+        let res = await this.$axios.get('/api'+ courseApi.getCoursesMessage)
         let { code, msg, data } = res.data;
         if(code === '0000') {
           this.tableData = data
@@ -103,8 +115,8 @@ export default {
     },
     watch: {
       '$route' (to, from) {
-        if(from.path.indexOf('addStudent') !== 0 || from.path.indexOf('modifyStudent') !== 0 ) {
-          this.getStudentsMessage();
+        if(from.path.indexOf('addCourse') !== 0 || from.path.indexOf('modifyCourse') !== 0 ) {
+          this.getCoursesMessage();
         }
       }
     }
