@@ -14,22 +14,22 @@
         <el-table-column
           prop="name"
           label="名字"
-          width="120">
+          width="230">
         </el-table-column>
         <el-table-column
           prop="teacherID"
           label="教师号"
-          width="120">
+          width="230">
         </el-table-column>
         <el-table-column
           prop="password"
           label="密码"
-          width="120">
+          width="230">
         </el-table-column>
         <el-table-column
           prop="phoneNumber"
           label="电话号码"
-          width="120">
+          width="230">
         </el-table-column>
         <el-table-column
           prop="mailBox"

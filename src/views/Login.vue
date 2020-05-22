@@ -8,7 +8,7 @@
           <div class="data-wrap">
               <div v-for="(item,index) in login.typeList" :key="index"  class="data-box">
                   <label for="">{{login.titleList[userType][index]}}</label>
-                  <input :type="item" v-model="login.userData[index]">
+                  <input :type="item" v-model="login.userData[index]" placeholder="可以输入123456">
               </div>
               <button @click="userLogin">登录</button>
           </div>

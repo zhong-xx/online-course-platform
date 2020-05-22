@@ -14,37 +14,37 @@
         <el-table-column
           prop="name"
           label="名字"
-          width="120">
+          width="135">
         </el-table-column>
         <el-table-column
           prop="studentID"
           label="学号"
-          width="120">
+          width="135">
         </el-table-column>
         <el-table-column
           prop="password"
           label="密码"
-          width="120">
+          width="135">
         </el-table-column>
         <el-table-column
           prop="college"
           label="学院"
-          width="120">
+          width="135">
         </el-table-column>
         <el-table-column
           prop="class"
           label="班级"
-          width="120">
+          width="135">
         </el-table-column>
         <el-table-column
           prop="major"
           label="专业"
-          width="120">
+          width="130">
         </el-table-column>
         <el-table-column
           prop="phoneNumber"
           label="电话号码"
-          width="120">
+          width="135">
         </el-table-column>
         <el-table-column
           prop="mailBox"

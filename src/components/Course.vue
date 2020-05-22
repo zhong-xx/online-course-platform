@@ -12,47 +12,47 @@
         <el-table-column
           prop="name"
           label="课程名"
-          width="120">
+          width="115">
         </el-table-column>
         <el-table-column
           prop="type"
           label="课程类型"
-          width="120">
+          width="115">
         </el-table-column>
         <el-table-column
           prop="place"
           label="课程地点"
-          width="120">
+          width="115">
         </el-table-column>
         <el-table-column
           prop="credit"
           label="学分"
-          width="120">
+          width="115">
         </el-table-column>
         <el-table-column
           prop="begin_week"
           label="开始周"
-          width="120">
+          width="115">
         </el-table-column>
         <el-table-column
           prop="end_week"
           label="结束周"
-          width="120">
+          width="115">
         </el-table-column>
         <el-table-column
           prop="book"
           label="书籍"
-          width="120">
+          width="115">
         </el-table-column>
         <el-table-column
           prop="teacher"
           label="教师"
-          width="120">
+          width="115">
         </el-table-column>
         <el-table-column
           prop="quantity"
           label="总数量"
-          show-overflow-tooltip>
+          width="115">
         </el-table-column>
         <el-table-column
           prop="selected_quantity"
