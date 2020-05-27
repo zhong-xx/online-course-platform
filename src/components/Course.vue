@@ -59,7 +59,9 @@
           label="已选数量"
           show-overflow-tooltip>
         </el-table-column>
+
         <slot></slot>
+
       </el-table>
   </div>
 </template>

@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import managerRouter from './manager'
 import studentRouter from './student'
 import teacherRouter from './teacher'
-import { otherApi } from '@/api'
 
 Vue.use(VueRouter)
 
@@ -18,13 +17,13 @@ const routes = [
       if(to.path === '/') {
         switch (localStorage.getItem('type')) {
           case 'student':
-            next('/studentMain/message/myCourse');
+            next('/studentMain/myCourse');
             break;
           case 'teacher':
             next('/teacherMain/messageT/studentGrade');
             break;
           case 'manager':
-            next('/main/message/user');
+            next('/main/student');
             break;
           default:
             next();

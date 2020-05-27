@@ -9,4 +9,6 @@ export default {
     deletePlan: '/plan/deletePlan',
     // 修改方案
     modifyPlan: '/plan/modifyPlan',
+    // 获取专业方案
+    getMajorPlan: '/plan/getMajorPlan',
 }

@@ -12,6 +12,7 @@
               <router-view></router-view>
 
               <router-view name="course" ref="course">
+
                   <template v-slot:func>
                       <div class="operation-container">
                           <el-button type="primary" @click="add">新增</el-button>
@@ -30,6 +31,10 @@
               </router-view>
 
               <router-view name="selectCourse">
+                  <template v-slot:func>
+                      <div>根据你的专业，推荐的课程有：<span class="major">{{majorPlan}}</span></div>
+                  </template>
+
                   <el-table-column
                     fixed="right"
                     label="操作"
@@ -84,11 +89,19 @@
 
 <script>
 import Aside from '@/components/Aside.vue'
-import { courseApi, studentCourseApi } from '@/api'
+import { courseApi, studentCourseApi, planApi } from '@/api'
 export default {
     name: 'Main',
     components: {
         Aside
+    },
+    created () {
+        this.getMajorPlan();
+    },
+    data () {
+        return {
+            majorPlan: ''
+        }
     },
     methods: {
         quit () {
@@ -132,6 +145,17 @@ export default {
             if(code === '0000') {
               this.$toast({text: msg, type: 'success'})
               this.$refs.myCourse.getCoursesMessage();
+            }
+        },
+        async getMajorPlan () {
+            let res = await this.$axios.get('/api'+ planApi.getMajorPlan, {
+                params: {
+                    id: localStorage.getItem('id')
+                }
+            })
+            let {code, msg, data} = res.data;
+            if(code === '0000') {
+                this.majorPlan = data;
             }
         }
     },
@@ -188,6 +212,10 @@ export default {
         .main {
             flex: 1;
             background: #f2f6fa;
+
+            .major {
+                color: rgb(30, 27, 219);
+            }
         }
     }
 }
